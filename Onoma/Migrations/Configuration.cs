@@ -13,27 +13,27 @@ namespace Onoma.Migrations
     {
         public Configuration()
         {
-            AutomaticMigrationsEnabled = false;
+            AutomaticMigrationsEnabled = true;
         }
 
         protected override void Seed(Onoma.Models.ApplicationDbContext context)
         {
             
-            if(!context.Roles.Any(x=>x.Name=="Administrators"))
+            if(!context.Roles.Any(x=>x.Name==RoleName.Administrators))
             {
                 var store = new RoleStore<IdentityRole>(context);
                 var manager = new RoleManager<IdentityRole>(store);
-                var role = new IdentityRole() { Name = "Administrators" };
+                var role = new IdentityRole() { Name = RoleName.Administrators };
 
                 manager.Create(role);
 
             }
 
-            if (!context.Roles.Any(x => x.Name == "Spectators"))
+            if (!context.Roles.Any(x => x.Name == RoleName.Spectators))
             {
                 var store = new RoleStore<IdentityRole>(context);
                 var manager = new RoleManager<IdentityRole>(store);
-                var role = new IdentityRole() { Name = "Spectators" };
+                var role = new IdentityRole() { Name = RoleName.Spectators };
 
                 manager.Create(role);
 
@@ -57,7 +57,7 @@ namespace Onoma.Migrations
                 };
 
                 userManager.Create(user);
-                userManager.AddToRole(user.Id, "Administrators");
+                userManager.AddToRole(user.Id, RoleName.Administrators);
 
             }
             if (!context.Users.Any(user => user.UserName == "Mitsos@gmail.com"))
@@ -74,8 +74,8 @@ namespace Onoma.Migrations
                 };
 
                 userManager.Create(user);
-                userManager.AddToRole(user.Id, "Administrators");
-                userManager.AddToRole(user.Id, "Spectators");
+                userManager.AddToRole(user.Id, RoleName.Administrators);
+                userManager.AddToRole(user.Id, RoleName.Spectators);
             }
 
 

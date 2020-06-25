@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Onoma.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -6,13 +7,15 @@ using System.Web.Mvc;
 
 namespace Onoma.Controllers
 {
-   
+
     public class HomeController : Controller
     {
 
-        [Authorize(Roles = "Administrators,Spectators")]
+
+        [Authorize(Roles = RoleName.Administrators + "," + RoleName.Spectators)] //Problima
         public ActionResult Index()
         {
+
             return View();
         }
 
@@ -30,5 +33,17 @@ namespace Onoma.Controllers
 
             return View();
         }
+
+
+        [Authorize(Roles = RoleName.Administrators)]
+        [Authorize(Roles = RoleName.Spectators)]
+        public ActionResult Contact223()
+        {
+            ViewBag.Message = "Your contact page.";
+
+            return View();
+        }
+
+
     }
 }
